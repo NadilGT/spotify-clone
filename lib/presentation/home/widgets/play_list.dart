@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/common/widgets/favorite_button/favorite_button.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/home/bloc/play_list_cubit.dart';
@@ -8,8 +9,14 @@ import 'package:spotify/presentation/home/bloc/play_list_state.dart';
 
 import '../../song_player/page/song_player.dart';
 
-class PlayList extends StatelessWidget {
+class PlayList extends StatefulWidget {
   const PlayList({super.key});
+
+  @override
+  State<PlayList> createState() => _PlayListState();
+}
+
+class _PlayListState extends State<PlayList> {
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +36,29 @@ class PlayList extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Playlist",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                    "Playlist",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    ),
+                    GestureDetector(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: Text(
+                      "See more",
+                      style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: Color(0xFFC6C6C6),
                       ),
-                      Text(
-                        "See more",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Color(0xFFC6C6C6),
-                        ),
-                      ),
-                    ],
+                    ),
+                    ),
+                  ],
                   ),
                   SizedBox(height: 20),
                   _songs(state.songs),
@@ -121,14 +133,7 @@ class PlayList extends StatelessWidget {
                 children: [
                   Text(songs[index].duartion.toString()),
                   SizedBox(width: 20),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.favorite_rounded,
-                      size: 25,
-                      color: AppColors.darkGrey,
-                    ),
-                  ),
+                  FavoriteButton(songEntity: songs[index])
                 ],
               ),
             ],
